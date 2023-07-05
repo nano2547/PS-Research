@@ -185,12 +185,12 @@ def preprocess(df, time=0.25e6):
 
 def correlation_pair(weights, dataframe, var1_index, var2_index, window, diff=0, pct_change=False):
 
-    corrs = dataframe.iloc[:, var1_index].rolling(window).corr(dataframe.iloc[:, var2_index]*weights)[window-1:]
+    corrs = dataframe.iloc[:, var1_index].rolling(window).corr(dataframe.iloc[:, var2_index])[window-1:]
     corrs_change = np.diff(corrs, n=diff)
     if pct_change:
         corrs_change = np.divide(corrs_change, corrs[:-1])
         
-    return corrs_change
+    return corrs_change*weights
 
 
 def correlation_pair_plot(weights, dataframe, var1_index, var2_index, window, freq=True,
@@ -258,7 +258,7 @@ def correlation_multi_plot(weight,dataframe, var1_index, var2_indices, window, f
     return corrs
 
 
-def var_pair(dataframe, var1_index, var2_index, window, diff=0, pct_change=False):
+def var_pair(weights, dataframe, var1_index, var2_index, window, diff=0, pct_change=False):
     
     var_x = dataframe.iloc[:, var1_index].rolling(window).var()[window-1:]
     var_y = dataframe.iloc[:, var2_index].rolling(window).var()[window-1:]
@@ -268,26 +268,26 @@ def var_pair(dataframe, var1_index, var2_index, window, diff=0, pct_change=False
     if pct_change:
         var_ratio_change = np.divide(var_ratio_change, var_ratio[:-diff])
         
-    return var_ratio_change
+    return var_ratio_change*weights
 
 
-def var_multi(dataframe, var1_index, var2_indices, window, diff=0, pct_change=False):
+def var_multi(weights, dataframe, var1_index, var2_indices, window, diff=0, pct_change=False):
 
     var = []
-    for var2_index in var2_indices:
-        var.append(var_pair(dataframe, var1_index, var2_index, window, diff=diff, pct_change=pct_change))
+    for ind, var2_index in enumerate(var2_indices):
+        var.append(var_pair(weights[ind], dataframe, var1_index, var2_index, window, diff=diff, pct_change=pct_change))
 
     return np.prod(var, axis=0)
 
 
 def covariance_pair(weights, dataframe, var1_index, var2_index, window, diff=0, pct_change=False):
     
-    covs = dataframe.iloc[:, var1_index].rolling(window).cov(dataframe.iloc[:, var2_index]*weight)[window-1:]
+    covs = dataframe.iloc[:, var1_index].rolling(window).cov(dataframe.iloc[:, var2_index])[window-1:]
     covs_change = np.diff(covs, n=diff)
     if pct_change:
         covs_change = np.divide(covs_change, covs[:-1])
         
-    return covs_change
+    return covs_change*weights
 
 
 def covariance_pair_plot(weights, dataframe, var1_index, var2_index, window, freq=True,
