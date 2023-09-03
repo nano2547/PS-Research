@@ -102,20 +102,20 @@ if topology == "A":
 # 110: [],
 # 111: [],
  80: [69, 54, 94, 87],
- 81: [70, 55, 95, 88],
- 82: [71, 56, 96, 89],
+ 81: [70, 55, 95, 89],
+ 82: [71, 56, 96, 88],
  69: [80, 54, 94, 87],
- 70: [81, 55, 95, 88],
- 71: [82, 56, 96, 89],
+ 70: [81, 55, 95, 89],
+ 71: [82, 56, 96, 88],
  54: [80, 69, 94, 87],
- 55: [81, 70, 95, 88],
- 56: [82, 71, 96, 89],
+ 55: [81, 70, 95, 89],
+ 56: [82, 71, 96, 88],
  94: [80, 69, 54, 5, 12, 19, 26],
  95: [81, 70, 55, 6, 13, 20, 27],
  96: [82, 71, 56, 7, 14, 21, 28],
  87: [80, 69, 54],
- 88: [81, 70, 55],
- 89: [82, 71, 56],
+ 89: [81, 70, 55],
+ 88: [82, 71, 56],
  5: [94],
  6: [95],
  7: [96],
@@ -390,8 +390,24 @@ elif topology == "C":
  26: [94],
  27: [95],
  28: [96]}
-    
 
+
+new_adj_list = {}
+for sensors, neigh in adj_list.items():
+    if sensors in [4,11,18,25,32,39,46,53,60,64,68,75,79,86,93,100,104,108,115,122]:
+        continue
+    else:
+        new_nei = []
+        for i in neigh:
+            if i in [4,11,18,25,32,39,46,53,60,64,68,75,79,86,93,100,104,108,115,122]:
+                continue
+            else:
+                new_nei += [i]
+        new_adj_list[sensors] = new_nei
+
+
+adj_list = new_adj_list      
+            
 adj_list = collections.OrderedDict(sorted(adj_list.items()))
 
 # index_mapping = [(1, 'C_CTWE5_A'), (2, 'C_CTWE5_B'), (3, 'C_CTWE5_C'), (4, 'C_CTWE5_N'), (5, 'V_PTWE4_AN'), (6, 'V_ PTWE4_BN'), (7, 'V_ PTWE4_CN'), (8, 'C_CTWE1_A'), (9, 'C_CTWE1_B'), (10, 'C_CTWE1_C'), (11, 'C_CTWE1_N'), (12, 'V_PTWE1_AN'), (13, 'V_ PTWE1_BN'), (14, 'V_ PTWE1_CN'), (15, 'C_CTWE9_A'), (16, 'C_CTWE9_B'), (17, 'C_CTWE9_C'), (18, 'C_CTWE9_N'), (19, 'V_PTWE3_AN'), (20, 'V_ PTWE3_BN'), (21, 'V_ PTWE3_CN'), (22, 'C_CTWE3_A'), (23, 'C_ CTWE3_B'), (24, 'C_ CTWE3_C'), (25, 'C_ CTWE3_N'), (26, 'V_PTWE2_AN'), (27, 'V_ PTWE2_BN'), (28, 'V_ PTWE2_CN'), (29, 'C_CTWE7_A'), (30, 'C_CTWE7_B'), (31, 'C_CTWE7_C'), (32, 'C_CTWE7_N'), (33, 'V_PTWE5_AN'), (34, 'V_ PTWE5_BN'), (35, 'V_ PTWE5_CN'), (36, 'C_CTWE2_A'), (37, 'C_ CTWE2_B'), (38, 'C_ CTWE2_C'), (39, 'C_ CTWE2_N'), (40, 'C_CTWE4_A'), (41, 'C_ CTWE4_B'), (42, 'C_ CTWE4_C'), (43, 'C_ CTWE4_N'), (44, 'C_CTWE6_A'), (45, 'C_ CTWE6_B'), (46, 'C_ CTWE6_C'), (47, 'C_ CTWE6_N'), (48, 'C_CTWE10_A'), (49, 'C_ CTWE10_B'), (50, 'C_ CTWE10_C'), (51, 'C_ CTWE10_N'), (52, 'C_CTWE8_A'), (53, 'C_CTWE8_B'), (54, 'C_CTWE8_C'), (55, 'C_CTWE8_N'), (56, 'V_PT_DIST1_AN'), (57, 'V_PT_DIST1_BN'), (58, 'V_PT_DIST1_CN'), (59, 'C_ CT_ DIST1_A'), (60, 'C_ CT_ DIST1_B'), (61, ' C_ CT_ DIST1_C'), (62, 'V_PT_DIST2_AN'), (63, 'V_PT_DIST2_BN'), (64, 'V_PT_DIST2_CN'), (65, 'C_ CT_ DIST2_A'), (66, 'C_ CT_ DIST2_B'), (67, ' C_ CT_ DIST2_C'), (68, 'V_PT_FDR3_AN'), (69, 'V_PT_FDR3_BN'), (70, 'V_PT_FDR3_CN'), (71, 'C_CT_FDR3_A'), (72, 'C_CT_FDR3_B'), (73, 'C_CT_FDR3_C'), (74, 'V_PT_FDR1_AN'), (75, 'V_PT_FDR1_BN'), (76, 'V_PT_FDR1_CN'), (77, 'C_CT_FDR1_A'), (78, 'C_CT_FDR1_B'), (79, 'C_CT_FDR1_C'), (80, 'V_PT_FDR32_AN'), (81, 'V_PT_FDR32_BN'), (82, 'V_PT_FDR32_CN'), (83, 'C_CT_FDR32_A'), (84, 'C_CT_FDR32_B'), (85, 'C_CT_FDR32_C'), (86, 'V_PT_FDR12_AN'), (87, 'V_PT_FDR12_BN'), (88, 'V_PT_FDR12_CN'), (89, 'C_CT_FDR12_A'), (90, 'C_CT_FDR12_B'), (91, 'C_CT_FDR12_C')]
@@ -404,16 +420,16 @@ order_attack = ['CT', 'Cphase', 'PT', 'Vphase', 'GPS', 'CT', 'Cphase', 'GPS']
 attack_dict = {61: (2.20, 3.50, 'CT', 'C_CTW10_A'),
                62: (2.20, 3.50, 'CT', 'C_CTW10_B'),
                63: (2.20, 3.50, 'CT', 'C_CTW10_C'),
-               64: (2.20, 3.50, 'CT', 'C_CTW10_N'),
+               #64: (2.20, 3.50, 'CT', 'C_CTW10_N'),
                52: (3.8, 4.5, 'Cphase', 'C_CTW9_C'),
                94: (4.5, 5.9, 'PT', 'V_PTW4_A'),
                95: (4.5, 5.9, 'PT', 'V_PTW4_B'),
                96: (4.5, 5.9, 'PT', 'V_PTW4_C'),
-               88: (6.2, 7.1, 'Vphase', 'V_PTW4_BN'),
+               89: (6.2, 7.1, 'Vphase', 'V_PTW4_BN'),
                76: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
                77: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
                78: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
-               79: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
+               #79: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
                80: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
                81: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
                82: (8.5, 9.4, 'GPS', 'C_CTWE1&V_PTWE1'),
@@ -423,12 +439,12 @@ attack_dict = {61: (2.20, 3.50, 'CT', 'C_CTW10_A'),
                29: (11.7, 12.7, 'CT', 'C_CTFDR2R1'),
                30: (11.7, 12.7, 'CT', 'C_CTFDR2R1'),
                31: (11.7, 12.7, 'CT', 'C_CTFDR2R1'),
-               32: (11.7, 12.7, 'CT', 'C_CTFDR2R1'),
+               #32: (11.7, 12.7, 'CT', 'C_CTFDR2R1'),
                38: (14.6, 15.8, 'Cphase', 'C_CTFDR2R2_C'),
                15: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
                16: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
                17: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
-               18: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
+               #18: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
                19: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
                20: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3'),
                21: (16.5, 17.5, 'GPS', 'C_CTFDR3&V_PTFDR3')
@@ -447,7 +463,9 @@ normal_dict = {6.10: ('L+', '1500kw+10kvar', 'Bus_3DB211'), 8.00: ('L+', '4500kw
                14.00: ('L+', '1500kw+10kvar', 'Bus_2DB112'), 14.40: ('L-', '4500kw+1000kvar', 'Bus_TRAIN1'),
                18.80: ('L-', '6500kw+2000kvar', 'FDR12LOAD'), 19.50: ('L-', '1500kw+10kvar', 'Bus_2DB112'),
                19.80: ('L+', '1500kw+10kvar', 'Bus_3DB211')}
-
+all_attack_times = set()
+for k, values in attack_dict.items():
+    all_attack_times.add((values[0], values[1]))
 
 '''removing all the neutral'''
 if remove_neutral:
